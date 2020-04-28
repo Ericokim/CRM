@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://Eric123:Eric123@devprojects-fozgn.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken",
+  "githubClientId": "703053f02ae99e1b2091",
+  "githubSecret": "a808fa2ed5dce0bd0b777213f5cb2c6ff284292f"
+}
