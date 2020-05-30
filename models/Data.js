@@ -9,15 +9,12 @@ const DataSchema = new mongoose.Schema({
     {
       title: {
         type: String,
-        required: true,
       },
       artist: {
         type: String,
-        required: true,
       },
       genre: {
         type: String,
-        required: true,
       },
       subGenre: {
         type: String,
@@ -25,13 +22,8 @@ const DataSchema = new mongoose.Schema({
       releaseDate: {
         type: Date,
       },
-      date: {
-        type: Date,
-        default: Date.now,
-      },
     },
   ],
-
   date: {
     type: Date,
     default: Date.now,

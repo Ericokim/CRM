@@ -2,11 +2,19 @@ import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import Spinner from "../layout/Spinner";
+import ReactLoading from "react-loading";
 import ProfileTop from "./ProfileTop";
-import { getProfileById } from "../../actions/profile";
+import { getProfileById, deleteAccount } from "../../actions/profile";
 
-const Profile = ({ getProfileById, profile: { profile, loading }, match }) => {
+const Loading = () => <ReactLoading type="bars" color="#20ad4f" />;
+
+const Profile = ({
+  getProfileById,
+  deleteAccount,
+  profile: { profile, loading },
+  auth,
+  match,
+}) => {
   const nullProfile = !profile;
   useEffect(() => {
     getProfileById(match.params.id);
@@ -15,9 +23,27 @@ const Profile = ({ getProfileById, profile: { profile, loading }, match }) => {
   return (
     <Fragment>
       {profile === null || loading ? (
-        <Spinner />
+        <div className="loading">
+          <Loading />
+        </div>
       ) : (
         <Fragment>
+          {auth.isAuthenticated &&
+            auth.loading === false &&
+            auth.user._id === profile.user._id && (
+              <>
+                <Link to="/edit-profile" className="btn btn-dark btn-sm">
+                  Edit Profile
+                </Link>
+
+                <button
+                  className="btn btn-dark btn-sm"
+                  onClick={() => deleteAccount()}
+                >
+                  Delete My Account
+                </button>
+              </>
+            )}
           <div className="profile-grid my-1">
             <ProfileTop profile={profile} />
           </div>
@@ -29,6 +55,7 @@ const Profile = ({ getProfileById, profile: { profile, loading }, match }) => {
 
 Profile.propTypes = {
   getProfileById: PropTypes.func.isRequired,
+  deleteAccount: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -38,4 +65,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getProfileById })(Profile);
+export default connect(mapStateToProps, { getProfileById, deleteAccount })(
+  Profile
+);

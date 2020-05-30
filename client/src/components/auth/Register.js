@@ -43,6 +43,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             <div className="form-group has-feedback">
               <input
                 type="text"
+                autoFocus
                 className="form-control"
                 placeholder="Full name"
                 name="name"

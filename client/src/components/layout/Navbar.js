@@ -5,12 +5,12 @@ import PropTypes from "prop-types";
 import { getProfileById } from "../../actions/profile";
 import { logout } from "../../actions/auth";
 
-const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+const Navbar = ({ auth: { user, isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <div className="navbar-custom-menu">
       <ul className="nav navbar-nav">
         <li>
-          <Link to="/profiles">Profile</Link>
+          <Link to={`/profile/${user && user._id}`}>Profile</Link>
         </li>
 
         <li>

@@ -1,18 +1,22 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import Spinner from "../layout/Spinner";
+import ReactLoading from "react-loading";
 import SongTrack from "./Songs";
-import { getAllSongs } from "../../actions/data";
+import { getAll } from "../../actions/data";
 
-const Dashboard = ({ getAllSongs, auth: { user }, data: { data, loading } }) => {
+const Loading = () => <ReactLoading type="bars" color="#20ad4f" />;
+
+const Dashboard = ({ getAll, data: { data, loading } }) => {
   useEffect(() => {
-    getAllSongs();
-  }, [getAllSongs]);
+    getAll();
+  }, [getAll]);
 
   return loading && data === null ? (
-    <Spinner />
+    <div className="loading">
+      <Loading />
+    </div>
   ) : (
     <Fragment>
       <section className="content-header">
@@ -22,15 +26,15 @@ const Dashboard = ({ getAllSongs, auth: { user }, data: { data, loading } }) => 
         <section className="content">
           <div className="row">
             <div className="col-xs-12">
-              <SongTrack song={data} />
+              <SongTrack song={data.songs} />
             </div>
           </div>
         </section>
       ) : (
         <Fragment>
-          <section className="content-header">
-            <p>Not Data, please add some info</p>
-          </section>
+          <div className="loading">
+            <Loading />
+          </div>
         </Fragment>
       )}
     </Fragment>
@@ -38,14 +42,12 @@ const Dashboard = ({ getAllSongs, auth: { user }, data: { data, loading } }) => 
 };
 
 Dashboard.propTypes = {
-  getAllSongs: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
+  getAll: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
   data: state.data,
 });
 
-export default connect(mapStateToProps, { getAllSongs})(Dashboard);
+export default connect(mapStateToProps, { getAll })(Dashboard);

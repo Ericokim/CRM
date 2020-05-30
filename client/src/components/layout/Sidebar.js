@@ -18,21 +18,23 @@ const Sidebar = ({
         <aside className="main-sidebar">
           <section className="sidebar">
             {/* User Panel */}
-            <div className="user-panel">
-              <div className="pull-left image">
-                <img
-                  src={user && user.avatar}
-                  className="img-circle"
-                  alt="User Image"
-                />
+            <Link to={`/profile/${user && user._id}`}>
+              <div className="user-panel">
+                <div className="pull-left image">
+                  <img
+                    src={user && user.avatar}
+                    className="img-circle"
+                    alt="User Image"
+                  />
+                </div>
+                <div className="pull-left info">
+                  <p>{user && user.name}</p>
+                  <a href="#">
+                    <i className="fa fa-circle text-success" /> Online
+                  </a>
+                </div>
               </div>
-              <div className="pull-left info">
-                <p>{user && user.name}</p>
-                <a href="#">
-                  <i className="fa fa-circle text-success" /> Online
-                </a>
-              </div>
-            </div>
+            </Link>
             {/* Menu */}
             <ul className="sidebar-menu" data-widget="tree">
               <li className="treeview">

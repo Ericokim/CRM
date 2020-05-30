@@ -1,10 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import moment from "moment";
 import { connect } from "react-redux";
-import { UpdateSong, deleteSong } from "../../actions/data";
+import { deleteSong } from "../../actions/data";
 
 const Songs = ({ song, deleteSong }) => {
   const script = document.createElement("script");
@@ -24,7 +24,7 @@ const Songs = ({ song, deleteSong }) => {
       <td>
         <div className="btn-group">
           <Link
-            to="/edit-song"
+            to={`/data/songs/update/${exp._id}`}
             type="button"
             className="btn btn-success btn-sm"
           >

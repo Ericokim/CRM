@@ -11,7 +11,12 @@ const User = require("../../models/User");
 // @access   Private
 router.get("/", auth, async (req, res) => {
   try {
-    const data = await Data.find();
+    const data = await Data.findOne();
+
+    if (!data) {
+      return res.status(400).json({ msg: "There is no data" });
+    }
+
     res.json(data);
   } catch (err) {
     console.error(err.message);
@@ -24,7 +29,7 @@ router.get("/", auth, async (req, res) => {
 // @access   Private
 router.get("/songs/:id", auth, async (req, res) => {
   try {
-    const data = await Data.findOne({ user: req.user.id });
+    const data = await Data.findOne();
 
     // Pull out songs
     const song = data.songs.find((song) => song.id === req.params.id);
@@ -47,49 +52,38 @@ router.get("/songs/:id", auth, async (req, res) => {
 // @route    POST api/data/songs/update/:id
 // @desc     Update individual song
 // @access   Private
-router.post(
-  "/songs/update/:id",
-  [
-    auth,
-    [
-      check("title", "Title is required").not().isEmpty(),
-      check("artist", "Artist is required").not().isEmpty(),
-      check("genre", "Genre is required").not().isEmpty(),
-    ],
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    try {
-      const data = await Data.findOne({ user: req.user.id });
-
-      // Pull out songs
-      const song = data.songs.find((song) => song.id === req.params.id);
-
-      if (!song) res.status(404).json({ msg: "Song does not exist" });
-      else song.title = req.body.title;
-      song.artist = req.body.artist;
-      song.genre = req.body.genre;
-      song.subGenre = req.body.subGenre;
-      song.releaseDate = req.body.releaseDate;
-
-      await data.save();
-
-      res.json(data);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server Error");
-    }
+router.post("/songs/update/:id", auth, async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
   }
-);
+
+  try {
+    const data = await Data.findOneAndUpdate({ user: req.user.id });
+
+    // Pull out songs
+    const song = data.songs.find((song) => song.id === req.params.id);
+
+    if (!song) res.status(404).json({ msg: "Song does not exist" });
+    else song.title = req.body.title;
+    song.artist = req.body.artist;
+    song.genre = req.body.genre;
+    song.subGenre = req.body.subGenre;
+    song.releaseDate = req.body.releaseDate;
+
+    await data.save();
+
+    res.json(data);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 // @route    POST api/data/add
 // @desc     Add songs
 // @access   Private
-router.post(
+router.put(
   "/add",
   [
     auth,
@@ -118,11 +112,7 @@ router.post(
 
     try {
       // Using upsert option (creates new doc if no match is found):
-      let data = await Data.findOneAndUpdate(
-        { user: req.user.id },
-        { $set: newSong },
-        { new: true, upsert: true }
-      );
+      let data = await Data.findOne({ user: req.user.id });
 
       data.songs.unshift(newSong);
 
@@ -148,11 +138,14 @@ router.delete("/songs/:id", auth, async (req, res) => {
     if (!song) {
       return res.status(404).json({ msg: "Song doesn't exist" });
     }
-    data.songs = data.songs.filter(({ id }) => id !== req.params.id);
+    // data.songs = data.songs.filter(({ id }) => id !== req.params.id);
+
+    data.songs = data.songs.filter(
+      (exp) => exp._id.toString() !== req.params.id
+    );
 
     await data.save();
-
-    res.json({ msg: "Song removed" });
+    return res.status(200).json(data);
   } catch (err) {
     console.error(err.message);
 

@@ -10,13 +10,14 @@ import {
   CLEAR_DATA,
 } from "./types";
 
-// Get Song
-export const getAllSongs = () => async (dispatch) => {
+// Get All Songs
+export const getAll = () => async (dispatch) => {
+  dispatch({ type: CLEAR_DATA });
   try {
     const res = await axios.get("/api/data");
 
     dispatch({
-      type: GET_DATAS,
+      type: GET_DATA,
       payload: res.data,
     });
   } catch (err) {
@@ -45,7 +46,7 @@ export const getSong = (id) => async (dispatch) => {
 };
 
 // Add song
-export const addSong = (formData) => async (dispatch) => {
+export const addSong = (formData, history) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -53,7 +54,7 @@ export const addSong = (formData) => async (dispatch) => {
   };
 
   try {
-    const res = await axios.post("/api/data/add", formData, config);
+    const res = await axios.put("/api/data/add", formData, config);
 
     dispatch({
       type: ADD_DATA,
@@ -61,7 +62,15 @@ export const addSong = (formData) => async (dispatch) => {
     });
 
     dispatch(setAlert("Song Created", "success"));
+
+    history.push("/dashboard");
   } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+    }
+
     dispatch({
       type: DATA_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
@@ -69,13 +78,8 @@ export const addSong = (formData) => async (dispatch) => {
   }
 };
 
-// Create Song
-export const UpdateSong = () => async (
-  id,
-  formData,
-  history,
-  edit = false
-) => async (dispatch) => {
+// Update Song
+export const UpdateSong = (id, formData, history) => async (dispatch) => {
   try {
     const config = {
       headers: {
@@ -90,15 +94,12 @@ export const UpdateSong = () => async (
     );
 
     dispatch({
-      type: UPDATE_DATA,
+      type: GET_DATA,
       payload: res.data,
     });
 
-    dispatch(setAlert(edit ? "Song Updated" : null, "success"));
-
-    if (!edit) {
-      history.push("/dashboard");
-    }
+    dispatch(setAlert("Song Updated", "success"));
+    history.push("/dashboard");
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -115,7 +116,8 @@ export const UpdateSong = () => async (
 
 // Delete Song
 export const deleteSong = (id) => async (dispatch) => {
-  if (window.confirm("Are you sure? This can NOT be undone!")) {
+  if (window.confirm("Are you sure you wish to delete this item? ")) {
+    dispatch({ type: CLEAR_DATA });
     try {
       const res = await axios.delete(`/api/data/songs/${id}`);
 

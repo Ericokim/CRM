@@ -18,6 +18,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case ADD_DATA:
     case GET_DATA:
     case UPDATE_DATA:
       return {
@@ -31,12 +32,6 @@ export default function (state = initialState, action) {
         datas: payload,
         loading: false,
       };
-      case ADD_DATA:
-        return {
-          ...state,
-          datas: [payload, ...state.datas],
-          loading: false,
-        };
     case DATA_ERROR:
       return {
         ...state,

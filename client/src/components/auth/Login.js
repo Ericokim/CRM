@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../../actions/auth";
@@ -42,6 +42,7 @@ const Login = ({ login, isAuthenticated }) => {
                 value={email}
                 onChange={(e) => onChange(e)}
                 required
+                autoFocus
               />
               <span className="glyphicon glyphicon-envelope form-control-feedback" />
             </div>
