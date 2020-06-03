@@ -1,9 +1,16 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { Modal, Form, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { UpdateSong, getSong } from "../../actions/data";
+
+const initialState = {
+  title: "",
+  artist: "",
+  genre: "",
+  subGenre: "",
+  releaseDate: "",
+};
 
 const Edit = ({
   data: { data, loading },
@@ -12,24 +19,11 @@ const Edit = ({
   history,
   match,
 }) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    artist: "",
-    genre: "",
-    subGenre: "",
-    releaseDate: "",
-  });
+  const [formData, setFormData] = useState(initialState);
 
   useEffect(() => {
     getSong(match.params.id);
-    setFormData({
-      title: loading || !data.songs ? "" : data.songs.title,
-      artist: loading || !data.songs ? "" : data.songs.artist,
-      genre: loading || !data.songs ? "" : data.songs.genre,
-      subGenre: loading || !data.songs ? "" : data.songs.subGenre,
-      releaseDate: loading || !data.songs ? "" : data.songs.releaseDate,
-    });
-  }, [loading, getSong, match.params.id]);
+  }, [getSong, match.params.id]);
 
   const { title, artist, genre, subGenre, releaseDate } = formData;
 
@@ -39,7 +33,7 @@ const Edit = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    UpdateSong(match.params.id, formData, history, true);
+    UpdateSong(match.params.id, formData, history);
   };
   return (
     <Fragment>
@@ -57,7 +51,7 @@ const Edit = ({
                       placeholder="title"
                       name="title"
                       value={title}
-                      onChange={(e) => onChange(e)}
+                      onChange={onChange}
                     />
                   </div>
                   <div className="form-group">

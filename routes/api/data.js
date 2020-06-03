@@ -53,11 +53,6 @@ router.get("/songs/:id", auth, async (req, res) => {
 // @desc     Update individual song
 // @access   Private
 router.post("/songs/update/:id", auth, async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   try {
     const data = await Data.findOneAndUpdate({ user: req.user.id });
 

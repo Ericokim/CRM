@@ -26,7 +26,7 @@ const Dashboard = ({ getAll, data: { data, loading } }) => {
         <section className="content">
           <div className="row">
             <div className="col-xs-12">
-              <SongTrack song={data.songs} />
+              <SongTrack key={data._id} song={data.songs} />
             </div>
           </div>
         </section>

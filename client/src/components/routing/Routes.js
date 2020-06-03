@@ -4,7 +4,7 @@ import Register from "../auth/Register";
 import Login from "../auth/Login";
 import Alert from "../layout/Alert";
 import Dashboard from "../dashboard/Dashboard";
-
+import CreateTrack from "../dashboard/CreateSong";
 import EditTrack from "../dashboard/EditSongs";
 import Profile from "../profile/Profile";
 import CreateProfile from "../profile-forms/CreateProfile";
@@ -23,10 +23,10 @@ const Routes = (props) => {
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/create-profile" component={CreateProfile} />
         <PrivateRoute exact path="/edit-profile" component={EditProfile} />
-
+        <PrivateRoute exact path="/create" component={CreateTrack} />
         <PrivateRoute
           exact
-          path="/data/songs/update/:id"
+          path="/edit/:id"
           component={EditTrack}
         />
         <Route component={NotFound} />

@@ -12,37 +12,6 @@ const Songs = ({ song, deleteSong }) => {
   script.async = true;
   document.body.appendChild(script);
 
-  const Tracklist = song.map((exp) => (
-    <tr key={exp._id}>
-      <td>{exp.title}</td>
-      <td>{exp.artist}</td>
-      <td>{exp.genre}</td>
-      <td>{exp.subGenre}</td>
-      <td>
-        <Moment format="YYYY/MM/DD">{moment.utc(exp.releaseDate)}</Moment>
-      </td>
-      <td>
-        <div className="btn-group">
-          <Link
-            to={`/data/songs/update/${exp._id}`}
-            type="button"
-            className="btn btn-success btn-sm"
-          >
-            Edit
-          </Link>
-
-          <button
-            type="button"
-            onClick={() => deleteSong(exp._id)}
-            className="btn btn-danger btn-sm"
-          >
-            Delete
-          </button>
-        </div>
-      </td>
-    </tr>
-  ));
-
   return (
     <Fragment>
       <div className="box">
@@ -50,6 +19,14 @@ const Songs = ({ song, deleteSong }) => {
           <h3 className="box-title">Song Tracks</h3>
         </div>
         <div className="box-body">
+          <Link
+            to="/create"
+            type="button"
+            style={{ float: "right" }}
+            className="btn btn-primary btn-sm"
+          >
+            Add
+          </Link>
           <table
             id="example1"
             className="table table-bordered table-striped alter table-hover"
@@ -64,7 +41,41 @@ const Songs = ({ song, deleteSong }) => {
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>{Tracklist}</tbody>
+            <tbody>
+              {song &&
+                song.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.title}</td>
+                    <td>{item.artist}</td>
+                    <td>{item.genre}</td>
+                    <td>{item.subGenre}</td>
+                    <td>
+                      <Moment format="YYYY/MM/DD">
+                        {moment.utc(item.releaseDate)}
+                      </Moment>
+                    </td>
+                    <td>
+                      <div className="btn-group">
+                        <Link
+                          to={`/edit/${item._id}`}
+                          type="button"
+                          className="btn btn-success btn-sm"
+                        >
+                          Edit
+                        </Link>
+
+                        <button
+                          type="button"
+                          onClick={() => deleteSong(item._id)}
+                          className="btn btn-danger btn-sm"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
           </table>
         </div>
       </div>
