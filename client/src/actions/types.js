@@ -31,9 +31,10 @@ export const ADD_COMMENT = "ADD_COMMENT";
 export const REMOVE_COMMENT = "REMOVE_COMMENT";
 
 export const GET_DATA = "GET_DATA";
-export const GET_DATAS = "GET_DATAS";
+export const GET_ALL = "GET_ALL";
 export const UPDATE_DATA = "UPDATE_DATA";
 export const DATA_ERROR = "DATA_ERROR";
 export const CLEAR_DATA = "CLEAR_DATA";
+export const CLEAR_DATAS = "CLEAR_DATAS";
 export const DELETE_DATA = "DELETE_DATA";
 export const ADD_DATA = "ADD_DATA";

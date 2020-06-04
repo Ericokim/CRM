@@ -1,9 +1,10 @@
 import {
   GET_DATA,
-  GET_DATAS,
+  GET_ALL,
   DATA_ERROR,
   ADD_DATA,
   UPDATE_DATA,
+  DELETE_DATA,
   CLEAR_DATA,
 } from "../actions/types";
 
@@ -26,7 +27,7 @@ export default function (state = initialState, action) {
         data: payload,
         loading: false,
       };
-    case GET_DATAS:
+    case GET_ALL:
       return {
         ...state,
         datas: payload,
@@ -39,6 +40,12 @@ export default function (state = initialState, action) {
         loading: false,
         data: null,
       };
+      case DELETE_DATA:
+        return {
+          ...state,
+          datas: payload,
+          loading: false,
+        };
     case CLEAR_DATA:
       return {
         ...state,

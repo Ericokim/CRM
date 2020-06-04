@@ -8,12 +8,12 @@ import { getAll } from "../../actions/data";
 
 const Loading = () => <ReactLoading type="bars" color="#20ad4f" />;
 
-const Dashboard = ({ getAll, data: { data, loading } }) => {
+const Dashboard = ({ getAll, data: { datas, loading } }) => {
   useEffect(() => {
     getAll();
   }, [getAll]);
 
-  return loading && data === null ? (
+  return loading && datas === null ? (
     <div className="loading">
       <Loading />
     </div>
@@ -22,21 +22,20 @@ const Dashboard = ({ getAll, data: { data, loading } }) => {
       <section className="content-header">
         <h1>Dashboard</h1>
       </section>
-      {data !== null ? (
-        <section className="content">
-          <div className="row">
-            <div className="col-xs-12">
-              <SongTrack key={data._id} song={data.songs} />
-            </div>
+
+      <section className="content">
+        <div className="row">
+          <div className="col-xs-12">
+            {datas !== null ? (
+              <SongTrack key={datas._id} song={datas.songs} />
+            ) : (
+              <div className="loading">
+                <Loading />
+              </div>
+            )}
           </div>
-        </section>
-      ) : (
-        <Fragment>
-          <div className="loading">
-            <Loading />
-          </div>
-        </Fragment>
-      )}
+        </div>
+      </section>
     </Fragment>
   );
 };

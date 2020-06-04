@@ -22,8 +22,17 @@ const Edit = ({
   const [formData, setFormData] = useState(initialState);
 
   useEffect(() => {
-    getSong(match.params.id);
-  }, [getSong, match.params.id]);
+    if (!data) getSong(match.params.id);
+    if (!loading && data) {
+      const songData = { ...initialState };
+
+      for (const key in data.songs) {
+        if (key in songData) songData[key] = data.songs[key];
+      }
+
+      setFormData(songData);
+    }
+  }, [loading, getSong, match.params.id]);
 
   const { title, artist, genre, subGenre, releaseDate } = formData;
 
@@ -33,7 +42,7 @@ const Edit = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    UpdateSong(match.params.id, formData, history);
+    UpdateSong(formData, match.params.id, history, true);
   };
   return (
     <Fragment>

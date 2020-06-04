@@ -3,9 +3,10 @@ import { setAlert } from "./alert";
 
 import {
   GET_DATA,
-  GET_DATAS,
+  GET_ALL,
   DATA_ERROR,
   UPDATE_DATA,
+  DELETE_DATA,
   ADD_DATA,
   CLEAR_DATA,
 } from "./types";
@@ -17,7 +18,7 @@ export const getAll = () => async (dispatch) => {
     const res = await axios.get("/api/data");
 
     dispatch({
-      type: GET_DATA,
+      type: GET_ALL,
       payload: res.data,
     });
   } catch (err) {
@@ -122,7 +123,7 @@ export const deleteSong = (id) => async (dispatch) => {
       const res = await axios.delete(`/api/data/songs/${id}`);
 
       dispatch({
-        type: UPDATE_DATA,
+        type: DELETE_DATA,
         payload: res.data,
       });
 
