@@ -29,20 +29,34 @@ const Edit = ({
       for (const key in data.songs) {
         if (key in songData) songData[key] = data.songs[key];
       }
-
       setFormData(songData);
     }
-  }, [loading, getSong, match.params.id]);
+  }, [loading, getSong, match.params.id, data]);
+
+  // useEffect(() => {
+  //   if (!data)
+  //     getSong(match.params.id).catch(function (error) {
+  //       console.log(error);
+  //     });
+  //   if (!loading && data) {
+  //     setFormData({
+  //       title: title,
+  //       artist: artist,
+  //       genre: genre,
+  //       subGenre: subGenre,
+  //       releaseDate: releaseDate,
+  //     });
+  //   }
+  // }, [loading, data, getSong, match.params.id]);
 
   const { title, artist, genre, subGenre, releaseDate } = formData;
 
-  const onChange = (e) => {
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    UpdateSong(formData, match.params.id, history, true);
+    UpdateSong(match.params.id, formData, history, true);
   };
   return (
     <Fragment>
@@ -83,7 +97,7 @@ const Edit = ({
                       onChange={onChange}
                       className="form-control select2"
                     >
-                      <option selected="selected">Select Genre</option>
+                      <option select="select">Select Genre</option>
                       <option value="bongo">bongo</option>
                       <option value="gospel">gospel</option>
                       <option value="genge">genge</option>
@@ -99,7 +113,7 @@ const Edit = ({
                       onChange={onChange}
                       className="form-control select2"
                     >
-                      <option selected="selected">Select Sub-Genre</option>
+                      <option select="select">Select Sub-Genre</option>
                       <option value="bongo">bongo</option>
                       <option value="gospel">gospel</option>
                       <option value="genge">genge</option>

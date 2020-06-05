@@ -9,6 +9,7 @@ import {
   DELETE_DATA,
   ADD_DATA,
   CLEAR_DATA,
+  CLEAR_DATAS,
 } from "./types";
 
 // Get All Songs
@@ -118,7 +119,7 @@ export const UpdateSong = (id, formData, history) => async (dispatch) => {
 // Delete Song
 export const deleteSong = (id) => async (dispatch) => {
   if (window.confirm("Are you sure you wish to delete this item? ")) {
-    dispatch({ type: CLEAR_DATA });
+    dispatch({ type: CLEAR_DATAS });
     try {
       const res = await axios.delete(`/api/data/songs/${id}`);
 

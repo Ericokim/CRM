@@ -6,6 +6,7 @@ import {
   UPDATE_DATA,
   DELETE_DATA,
   CLEAR_DATA,
+  CLEAR_DATAS,
 } from "../actions/types";
 
 const initialState = {
@@ -52,6 +53,12 @@ export default function (state = initialState, action) {
         data: null,
         loading: false,
       };
+      case CLEAR_DATAS:
+        return {
+          ...state,
+          datas: null,
+          loading: false,
+        };
 
     default:
       return state;
