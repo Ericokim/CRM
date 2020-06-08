@@ -30,7 +30,7 @@ const Profile = ({
           </Link>
         </section>
       ) : (
-        <Fragment>
+        <section className="content">
           {auth.isAuthenticated &&
             auth.loading === false &&
             auth.user._id === profile.user._id && (
@@ -50,7 +50,7 @@ const Profile = ({
           <div className="profile-grid my-1">
             <ProfileTop profile={profile} />
           </div>
-        </Fragment>
+        </section>
       )}
     </Fragment>
   );
