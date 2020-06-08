@@ -19,16 +19,12 @@ const Routes = (props) => {
       <Switch>
         <Route exact path="/register" component={Register} />
         <Route exact path="/" component={Login} />
-        <Route exact path="/profile/:id" component={Profile} />
+        <PrivateRoute exact path="/profile/:id" component={Profile} />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/create-profile" component={CreateProfile} />
         <PrivateRoute exact path="/edit-profile" component={EditProfile} />
         <PrivateRoute exact path="/create" component={CreateTrack} />
-        <PrivateRoute
-          exact
-          path="/edit/:id"
-          component={EditTrack}
-        />
+        <PrivateRoute exact path="/edit/:id" component={EditTrack} />
         <Route component={NotFound} />
       </Switch>
     </div>
