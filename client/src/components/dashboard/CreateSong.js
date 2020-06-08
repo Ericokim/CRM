@@ -63,7 +63,7 @@ const CreateSong = ({ addSong, history }) => {
                       onChange={onChange}
                       className="form-control select2"
                     >
-                      <option selected="selected">Select Genre</option>
+                      <option select="select">Select Genre</option>
                       <option value="bongo">bongo</option>
                       <option value="gospel">gospel</option>
                       <option value="genge">genge</option>
@@ -79,7 +79,7 @@ const CreateSong = ({ addSong, history }) => {
                       onChange={onChange}
                       className="form-control select2"
                     >
-                      <option selected="selected">Select Sub-Genre</option>
+                      <option select="select">Select Sub-Genre</option>
                       <option value="bongo">bongo</option>
                       <option value="gospel">gospel</option>
                       <option value="genge">genge</option>
