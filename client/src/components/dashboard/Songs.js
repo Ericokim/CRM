@@ -44,7 +44,7 @@ const Songs = ({ song, deleteSong }) => {
             <tbody>
               {song &&
                 song.map((item, index) => (
-                  <tr key={item._id}>
+                  <tr key={index}>
                     <td>{item.title}</td>
                     <td>{item.artist}</td>
                     <td>{item.genre}</td>
