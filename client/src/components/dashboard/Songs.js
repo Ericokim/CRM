@@ -17,8 +17,6 @@ const Songs = ({ song, deleteSong }) => {
       <div className="box">
         <div className="box-header">
           <h3 className="box-title">Song Tracks</h3>
-        </div>
-        <div className="box-body">
           <Link
             to="/create"
             type="button"
@@ -27,6 +25,8 @@ const Songs = ({ song, deleteSong }) => {
           >
             Add
           </Link>
+        </div>
+        <div className="box-body">
           <table
             id="example1"
             className="table table-bordered table-striped alter table-hover"

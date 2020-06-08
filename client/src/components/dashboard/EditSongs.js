@@ -31,23 +31,7 @@ const Edit = ({
       }
       setFormData(songData);
     }
-  }, [loading, getSong, match.params.id, data]);
-
-  // useEffect(() => {
-  //   if (!data)
-  //     getSong(match.params.id).catch(function (error) {
-  //       console.log(error);
-  //     });
-  //   if (!loading && data) {
-  //     setFormData({
-  //       title: title,
-  //       artist: artist,
-  //       genre: genre,
-  //       subGenre: subGenre,
-  //       releaseDate: releaseDate,
-  //     });
-  //   }
-  // }, [loading, data, getSong, match.params.id]);
+  }, [getSong, match.params.id]);
 
   const { title, artist, genre, subGenre, releaseDate } = formData;
 
