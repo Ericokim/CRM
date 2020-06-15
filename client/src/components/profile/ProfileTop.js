@@ -12,14 +12,20 @@ const ProfileTop = ({
 }) => {
   return (
     <section className="content">
-      <img className="round-img my-1" src={avatar} alt />
-      <h4 className="large">{name}</h4>
-      <h5 className="large">{email}</h5>
-      <p className="lead">
+      <img
+        className="profile-user-img img-responsive img-circle no-border"
+        src={avatar}
+        alt="User image"
+      />
+      <h4 className="profile-username text-center">{name}</h4>
+      <h5 className="profile-username text-center">{email}</h5>
+      <p className="text-muted text-center">
         {status}
         {company && <span> at {company.toUpperCase()}</span>}
       </p>
-      <p>{location && <span>{location}</span>}</p>
+      <p className="text-muted text-center">
+        {location && <span>{location}</span>}
+      </p>
     </section>
   );
 };

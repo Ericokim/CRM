@@ -9,14 +9,44 @@ const Navbar = ({ auth: { user, isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <div className="navbar-custom-menu">
       <ul className="nav navbar-nav">
-        <li>
-          <Link to={`/profile/${user && user._id}`}>Profile</Link>
-        </li>
-
-        <li>
-          <a onClick={logout} href="#!">
-            <span className="hide-sm">Logout</span>
+        <li className="dropdown user user-menu">
+          <a href="#" className="dropdown-toggle" data-toggle="dropdown">
+            <img
+              src={user && user.avatar}
+              className="user-image"
+              alt="User Image"
+            />
+            <span className="hidden-xs">{user && user.name}</span>
           </a>
+          <ul className="dropdown-menu user">
+            <li className="user-header pull-left">
+              <img
+                src={user && user.avatar}
+                className="img-circle no-border"
+                alt="User Image"
+              />
+              <p>
+                <b>{user && user.name}</b>
+              </p>
+              <p>{user && user.email}</p>
+            </li>
+
+            <li className="user">
+              <div className="btn btn-group">
+                <Link to={`/profile/${user && user._id}`}>
+                  <p className="btn btn-default btn-flat btn-sm">Profile</p>
+                </Link>
+              </div>
+              <div className="btn btn-group">
+                <p
+                  onClick={() => logout()}
+                  className="btn btn-default btn-flat btn-sm"
+                >
+                  Sign out
+                </p>
+              </div>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>

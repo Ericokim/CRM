@@ -11,6 +11,7 @@ const EditProfile = ({
   history,
 }) => {
   const [formData, setFormData] = useState({
+    name: "",
     company: "",
     location: "",
     status: "",
@@ -19,13 +20,14 @@ const EditProfile = ({
   useEffect(() => {
     getCurrentProfile();
     setFormData({
+      name: loading || !profile.user.name ? "" : profile.user.name,
       company: loading || !profile.company ? "" : profile.company,
       location: loading || !profile.location ? "" : profile.location,
       status: loading || !profile.status ? "" : profile.status,
     });
   }, [loading, getCurrentProfile]);
 
-  const { company, location, status } = formData;
+  const { name, company, location, status } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -42,6 +44,16 @@ const EditProfile = ({
             <div className="box">
               <div className="box-body">
                 <form className="form" onSubmit={(e) => onSubmit(e)}>
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Name"
+                      name="name"
+                      value={name}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </div>
                   <div className="form-group">
                     <input
                       type="text"
@@ -88,12 +100,14 @@ EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
+  loadUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
-  withRouter(EditProfile)
-);
+export default connect(mapStateToProps, {
+  createProfile,
+  getCurrentProfile,
+})(withRouter(EditProfile));

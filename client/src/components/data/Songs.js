@@ -1,8 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import moment from "moment";
+import EditSongs from "./EditSongs";
+import Confirm from "react-confirm-bootstrap";
 import { connect } from "react-redux";
 import { deleteSong } from "../../actions/data";
 
@@ -11,6 +13,16 @@ const Songs = ({ song, deleteSong }) => {
   script.src = "js/content.js";
   script.async = true;
   document.body.appendChild(script);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const showModal = () => {
+    setIsOpen(true);
+  };
+
+  const hideModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <Fragment>
@@ -27,6 +39,7 @@ const Songs = ({ song, deleteSong }) => {
           </Link>
         </div>
         <div className="box-body">
+          <EditSongs data={song} show={isOpen} hide={hideModal} />
           <table
             id="example1"
             className="table table-bordered table-striped alter table-hover"
@@ -55,23 +68,27 @@ const Songs = ({ song, deleteSong }) => {
                       </Moment>
                     </td>
                     <td>
-                      <div className="btn-group">
-                        <Link
-                          to={`/edit/${item._id}`}
-                          type="button"
-                          className="btn btn-success btn-sm"
-                        >
-                          Edit
-                        </Link>
+                      <button
+                        type="button"
+                        onClick={showModal}
+                        className="btn btn-success btn-sm btn-flat"
+                      >
+                        Edit
+                      </button>
 
+                      <Confirm
+                        onConfirm={() => deleteSong(item._id)}
+                        body="Are you sure you want to delete this?"
+                        confirmText="Confirm Delete"
+                        title="Delete Song"
+                      >
                         <button
                           type="button"
-                          onClick={() => deleteSong(item._id)}
-                          className="btn btn-danger btn-sm"
+                          className="btn btn-danger btn-sm btn-flat"
                         >
                           Delete
                         </button>
-                      </div>
+                      </Confirm>
                     </td>
                   </tr>
                 ))}

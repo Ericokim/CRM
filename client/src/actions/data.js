@@ -118,22 +118,20 @@ export const UpdateSong = (id, formData, history) => async (dispatch) => {
 
 // Delete Song
 export const deleteSong = (id) => async (dispatch) => {
-  if (window.confirm("Are you sure you wish to delete this item? ")) {
-    dispatch({ type: CLEAR_DATAS });
-    try {
-      const res = await axios.delete(`/api/data/songs/${id}`);
+  dispatch({ type: CLEAR_DATAS });
+  try {
+    const res = await axios.delete(`/api/data/songs/${id}`);
 
-      dispatch({
-        type: DELETE_DATA,
-        payload: res.data,
-      });
+    dispatch({
+      type: DELETE_DATA,
+      payload: res.data,
+    });
 
-      dispatch(setAlert("Song Removed", "success"));
-    } catch (err) {
-      dispatch({
-        type: DATA_ERROR,
-        payload: { msg: err.response.statusText, status: err.response.status },
-      });
-    }
+    dispatch(setAlert("Song Removed", "success"));
+  } catch (err) {
+    dispatch({
+      type: DATA_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
   }
 };

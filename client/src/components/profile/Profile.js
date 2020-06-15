@@ -31,24 +31,30 @@ const Profile = ({
         </section>
       ) : (
         <section className="content">
-          {auth.isAuthenticated &&
-            auth.loading === false &&
-            auth.user._id === profile.user._id && (
-              <>
-                <Link to="/edit-profile" className="btn btn-dark btn-sm">
-                  Edit Profile
-                </Link>
+          <div className="col-md-3">
+            <div className="box box-primary">
+              <div className="box-body box-profile">
+                <ProfileTop profile={profile} />
 
-                <button
-                  className="btn btn-dark btn-sm"
-                  onClick={() => deleteAccount()}
-                >
-                  Delete My Account
-                </button>
-              </>
-            )}
-          <div className="profile-grid my-1">
-            <ProfileTop profile={profile} />
+                {auth.isAuthenticated &&
+                  auth.loading === false &&
+                  auth.user._id === profile.user._id && (
+                    <>
+                      
+                      <Link to="/edit-profile" className="btn btn-dark btn-sm">
+                        Edit Profile
+                      </Link>
+
+                      <p
+                        className="btn btn-dark btn-sm"
+                        onClick={() => deleteAccount()}
+                      >
+                        Delete My Account
+                      </p>
+                    </>
+                  )}
+              </div>
+            </div>
           </div>
         </section>
       )}
