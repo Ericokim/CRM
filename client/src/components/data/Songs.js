@@ -6,9 +6,9 @@ import moment from "moment";
 import EditSongs from "./EditSongs";
 import Confirm from "react-confirm-bootstrap";
 import { connect } from "react-redux";
-import { deleteSong } from "../../actions/data";
+import { UpdateSong, getSong, deleteSong } from "../../actions/data";
 
-const Songs = ({ song, deleteSong }) => {
+const Songs = ({ song, deleteSong,match }) => {
   const script = document.createElement("script");
   script.src = "js/content.js";
   script.async = true;
@@ -39,7 +39,7 @@ const Songs = ({ song, deleteSong }) => {
           </Link>
         </div>
         <div className="box-body">
-          <EditSongs data={song} show={isOpen} hide={hideModal} />
+          <EditSongs data={getSong()} show={isOpen} hide={hideModal} />
           <table
             id="example1"
             className="table table-bordered table-striped alter table-hover"
@@ -70,7 +70,7 @@ const Songs = ({ song, deleteSong }) => {
                     <td>
                       <button
                         type="button"
-                        onClick={showModal}
+                        onClick={(id) => setIsOpen({ showModal: true, id })}
                         className="btn btn-success btn-sm btn-flat"
                       >
                         Edit
@@ -105,4 +105,10 @@ Songs.propTypes = {
   deleteSong: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deleteSong })(Songs);
+const mapStateToProps = (state) => ({
+  data: state.data,
+});
+
+export default connect(mapStateToProps, { UpdateSong, getSong, deleteSong })(
+  Songs
+);

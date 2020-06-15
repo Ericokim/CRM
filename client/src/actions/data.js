@@ -65,7 +65,7 @@ export const addSong = (formData, history) => async (dispatch) => {
 
     dispatch(setAlert("Song Created", "success"));
 
-    history.push("/dashboard");
+    history.push("/table");
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -101,7 +101,7 @@ export const UpdateSong = (id, formData, history) => async (dispatch) => {
     });
 
     dispatch(setAlert("Song Updated", "success"));
-    history.push("/dashboard");
+    history.push("/table");
   } catch (err) {
     const errors = err.response.data.errors;
 
