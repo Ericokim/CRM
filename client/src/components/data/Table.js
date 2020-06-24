@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import ReactLoading from "react-loading";
-import SongTrack from "./Songs";
+import Books from "./Books";
 import { getAll } from "../../actions/data";
 
 const Loading = () => <ReactLoading type="bars" color="#20ad4f" />;
@@ -27,7 +27,11 @@ const Table = ({ getAll, data: { datas, loading } }) => {
         <div className="row">
           <div className="col-md-12">
             {datas !== null ? (
-              <SongTrack key={datas._id} song={datas.songs} />
+              <Books
+                key={datas._id}
+                Item={datas.songs}
+                data={datas.songs}
+              />
             ) : (
               <div className="loading">
                 <Loading />

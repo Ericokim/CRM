@@ -71,11 +71,50 @@ ul {
   justify-content: space-around;
 }
 button {
-  font-size: .9rem;
+  font-size: 0.9rem;
   font-weight: 700;
   border: none;
   border-radius: 3px;
-  padding: .3rem 1rem;
-  margin-left: .5rem;
+  padding: 0.3rem 1rem;
+  margin-left: 0.5rem;
 }
 
+.illustration {
+  text-align: center;
+  font-size: 50px;
+  color: #2980ef;
+}
+
+.breadcrumb-separator {
+  color: #333;
+  margin: auto 6px;
+  user-select: none;
+}
+
+.breadcrumb-collapser {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-collapser svg {
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  color: #000;
+  width: 25px;
+  height: 25px;
+}
+.breadcrumb-collapser svg:hover,
+.breadcrumb-collapser svg:focus {
+  color: #999;
+  transform: scale(1.15);
+}
+
+.breadcrumb-collapser svg:active {
+  color: #333;
+}
+
+ol {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}

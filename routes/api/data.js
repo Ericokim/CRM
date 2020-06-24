@@ -36,7 +36,7 @@ router.get("/songs/:id", auth, async (req, res) => {
 
     // Make sure song exists
     if (!song) {
-      return res.status(404).json({ msg: "Song does not exist" });
+      return res.status(404).json({ msg: "Does not exist" });
     }
 
     data.songs = data.songs.find(({ id }) => id === req.params.id);
@@ -59,12 +59,14 @@ router.post("/songs/update/:id", auth, async (req, res) => {
     // Pull out songs
     const song = data.songs.find((song) => song.id === req.params.id);
 
-    if (!song) res.status(404).json({ msg: "Song does not exist" });
+    if (!song) res.status(404).json({ msg: "Does not exist" });
     else song.title = req.body.title;
-    song.artist = req.body.artist;
-    song.genre = req.body.genre;
-    song.subGenre = req.body.subGenre;
-    song.releaseDate = req.body.releaseDate;
+    song.isbn = req.body.isbn;
+    song.author = req.body.author;
+    song.description = req.body.description;
+    song.published_date = req.body.published_date;
+    song.updated_date = req.body.updated_date;
+    song.publisher = req.body.publisher;
 
     await data.save();
 
@@ -84,8 +86,8 @@ router.put(
     auth,
     [
       check("title", "Title is required").not().isEmpty(),
-      check("artist", "Artist is required").not().isEmpty(),
-      check("genre", "Genre is required").not().isEmpty(),
+      check("author", "Author is required").not().isEmpty(),
+      check("publisher", "Publisher is required").not().isEmpty(),
     ],
   ],
   async (req, res) => {
@@ -94,25 +96,37 @@ router.put(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { title, artist, genre, subGenre, releaseDate } = req.body;
+    const {
+      title,
+      isbn,
+      author,
+      description,
+      published_date,
+      publisher,
+      updated_date,
+    } = req.body;
 
     const newSong = {
       user: req.user.id,
       title,
-      artist,
-      genre,
-      subGenre,
-      releaseDate,
+      isbn,
+      author,
+      description,
+      published_date,
+      publisher,
+      updated_date,
     };
 
     try {
       // Using upsert option (creates new doc if no match is found):
-      let data = await Data.findOne({ user: req.user.id });
+      let data = await Data.findOneAndUpdate(
+        { user: req.user.id },
+        { $set: newSong },
+        { new: true, upsert: true }
+      );
 
-      data.songs.unshift(newSong);
-
+      await data.songs.unshift(newSong);
       await data.save();
-
       res.json(data);
     } catch (err) {
       console.error(err.message);
@@ -131,7 +145,7 @@ router.delete("/songs/:id", auth, async (req, res) => {
     const song = data.songs.find((song) => song.id === req.params.id);
 
     if (!song) {
-      return res.status(404).json({ msg: "Song doesn't exist" });
+      return res.status(404).json({ msg: "Doesn't exist" });
     }
     // data.songs = data.songs.filter(({ id }) => id !== req.params.id);
 

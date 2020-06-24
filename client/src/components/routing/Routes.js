@@ -5,8 +5,8 @@ import Login from "../auth/Login";
 import Alert from "../layout/Alert";
 import Dashboard from "../dashboard/Dashboard";
 import Table from "../data/Table";
-import CreateTrack from "../data/CreateSong";
-import EditTrack from "../data/EditSongs";
+import CreateBook from "../data/Create";
+import EditBook from "../data/Edit";
 import Profile from "../profile/Profile";
 import CreateProfile from "../profile-forms/CreateProfile";
 import EditProfile from "../profile-forms/EditProfile";
@@ -25,8 +25,8 @@ const Routes = (props) => {
         <PrivateRoute exact path="/table" component={Table} />
         <PrivateRoute exact path="/create-profile" component={CreateProfile} />
         <PrivateRoute exact path="/edit-profile" component={EditProfile} />
-        <PrivateRoute exact path="/create" component={CreateTrack} />
-        <PrivateRoute exact path="/edit/:id" component={EditTrack} />
+        <PrivateRoute exact path="/create" component={CreateBook} />
+        <PrivateRoute exact path="/edit/:id" component={EditBook} />
         <Route component={NotFound} />
       </Switch>
     </div>

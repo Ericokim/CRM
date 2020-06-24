@@ -9,18 +9,28 @@ const DataSchema = new mongoose.Schema({
     {
       title: {
         type: String,
+        required: true,
       },
-      artist: {
+      isbn: {
+        type: String,
+        required: true,
+      },
+      author: {
+        type: String,
+        required: true,
+      },
+      description: {
         type: String,
       },
-      genre: {
-        type: String,
-      },
-      subGenre: {
-        type: String,
-      },
-      releaseDate: {
+      published_date: {
         type: Date,
+      },
+      publisher: {
+        type: String,
+      },
+      updated_date: {
+        type: Date,
+        default: Date.now,
       },
     },
   ],

@@ -10,6 +10,12 @@ const Login = ({ login, isAuthenticated }) => {
     password: "",
   });
 
+  const [value, setValue] = useState({ hidden: true });
+
+  const toggleShow = () => {
+    setValue({ hidden: !value.hidden });
+  };
+
   const { email, password } = formData;
 
   const onChange = (e) =>
@@ -33,6 +39,18 @@ const Login = ({ login, isAuthenticated }) => {
         <div className="login-box-body">
           <p className="login-box-msg"> Sign Into Your Account</p>
           <form onSubmit={(e) => onSubmit(e)}>
+            {/* <div
+              className="illustration"
+              onClick={toggleShow}
+              style={{ cursor: "pointer", color: "#000" }}
+            >
+              {value.hidden ? (
+                <i className="fa fa-eye-slash" />
+              ) : (
+                <i className="fa fa-eye" />
+              )}
+            </div> */}
+
             <div className="form-group has-feedback">
               <input
                 type="email"
@@ -48,7 +66,7 @@ const Login = ({ login, isAuthenticated }) => {
             </div>
             <div className="form-group has-feedback">
               <input
-                type="password"
+                type={value.hidden ? "password" : "text"}
                 className="form-control"
                 placeholder="Password"
                 name="password"
@@ -59,7 +77,19 @@ const Login = ({ login, isAuthenticated }) => {
               <span className="glyphicon glyphicon-lock form-control-feedback" />
             </div>
             <div className="row">
-              <div className="col-xs-8"></div>
+              <div className="col-xs-8">
+                <div className="checkbox icheck">
+                  <label htmlFor="checkbox">
+                    <input
+                      type="checkbox"
+                      id="checkbox"
+                      onClick={toggleShow}
+                      checked={!value.hidden}
+                    />
+                    Show password
+                  </label>
+                </div>
+              </div>
               <div className="col-xs-4">
                 <input
                   type="submit"

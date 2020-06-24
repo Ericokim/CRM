@@ -12,7 +12,7 @@ import {
   CLEAR_DATAS,
 } from "./types";
 
-// Get All Songs
+// Get All
 export const getAll = () => async (dispatch) => {
   dispatch({ type: CLEAR_DATA });
   try {
@@ -30,8 +30,8 @@ export const getAll = () => async (dispatch) => {
   }
 };
 
-// Get Song by id
-export const getSong = (id) => async (dispatch) => {
+// Get by id
+export const getData = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/data/songs/${id}`);
 
@@ -47,13 +47,15 @@ export const getSong = (id) => async (dispatch) => {
   }
 };
 
-// Add song
-export const addSong = (formData, history) => async (dispatch) => {
+// Add
+export const addData = (formData, history) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
+  
+  dispatch({ type: CLEAR_DATA });
 
   try {
     const res = await axios.put("/api/data/add", formData, config);
@@ -63,7 +65,7 @@ export const addSong = (formData, history) => async (dispatch) => {
       payload: res.data,
     });
 
-    dispatch(setAlert("Song Created", "success"));
+    dispatch(setAlert("Created", "success"));
 
     history.push("/table");
   } catch (err) {
@@ -80,8 +82,8 @@ export const addSong = (formData, history) => async (dispatch) => {
   }
 };
 
-// Update Song
-export const UpdateSong = (id, formData, history) => async (dispatch) => {
+// Update
+export const UpdateData = (id, formData, history) => async (dispatch) => {
   try {
     const config = {
       headers: {
@@ -100,7 +102,7 @@ export const UpdateSong = (id, formData, history) => async (dispatch) => {
       payload: res.data,
     });
 
-    dispatch(setAlert("Song Updated", "success"));
+    dispatch(setAlert("Updated", "success"));
     history.push("/table");
   } catch (err) {
     const errors = err.response.data.errors;
@@ -116,8 +118,8 @@ export const UpdateSong = (id, formData, history) => async (dispatch) => {
   }
 };
 
-// Delete Song
-export const deleteSong = (id) => async (dispatch) => {
+// Delete
+export const deleteData = (id) => async (dispatch) => {
   dispatch({ type: CLEAR_DATAS });
   try {
     const res = await axios.delete(`/api/data/songs/${id}`);
@@ -127,7 +129,7 @@ export const deleteSong = (id) => async (dispatch) => {
       payload: res.data,
     });
 
-    dispatch(setAlert("Song Removed", "success"));
+    dispatch(setAlert("Removed", "success"));
   } catch (err) {
     dispatch({
       type: DATA_ERROR,
