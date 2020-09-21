@@ -44,12 +44,19 @@ const Sidebar = ({
                 </Link>
               </li>
 
-              <li className="treeview">
+              {/* <li className="treeview">
                 <Link to="/table">
                   <i class="fa fa-table" />{" "}
                   <span className="hide-sm">Table</span>
                 </Link>
-              </li>
+              </li> */}
+
+              {/* <li className="treeview">
+                <Link to="/users">
+                  <i class="fa fa-users" />{" "}
+                  <span className="hide-sm">Members</span>
+                </Link>
+              </li> */}
             </ul>
           </section>
         </aside>
