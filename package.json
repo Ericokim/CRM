@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@sentry/browser": "^5.16.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "client": "0.0.1",
     "config": "^3.3.1",
