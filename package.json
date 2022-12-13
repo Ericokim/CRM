@@ -20,7 +20,7 @@
     "config": "^3.3.1",
     "crypto": "^1.0.1",
     "doj-react-adminlte": "^0.7.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-validator": "^6.4.0",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
